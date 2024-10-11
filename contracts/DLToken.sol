@@ -4,9 +4,9 @@ pragma solidity ^0.8.27;
 contract DLToken{
 
     //the state variables
-    string  public  tokenName;
-    string  public tokenSymbol;
-    uint256  public  totalSupply;
+    string   tokenName;
+    string   tokenSymbol;
+    uint256    totalSupply;
     address  public  owner;
 
     //making an amount tracable by address

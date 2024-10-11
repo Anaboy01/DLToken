@@ -38,7 +38,7 @@ describe("Todo Test", function () {
 
         const name = await token.connect(owner).getTokenName()
 
-        expect(name).to.be.equal(await token.tokenName());
+        expect(name).to.be.equal(await token.getTokenName());
 
     })
 
@@ -49,7 +49,7 @@ describe("Todo Test", function () {
 
         const symbol = await token.connect(owner).getSymbol()
 
-        expect(symbol).to.be.equal(await token.tokenSymbol());
+        expect(symbol).to.be.equal(await token.getSymbol());
 
     })
 
@@ -60,7 +60,7 @@ describe("Todo Test", function () {
 
         const supply = await token.connect(owner).getTotalSupply()
 
-        expect(supply).to.be.equal(await token.totalSupply());
+        expect(supply).to.be.equal(await token.getTotalSupply());
 
     })
 

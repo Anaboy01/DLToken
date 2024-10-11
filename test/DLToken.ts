@@ -151,32 +151,32 @@ describe("Todo Test", function () {
 
     
 
-            const intialBalance = await token.balanceOf(owner.address)
+            const intialTotalSupply = await token.getTotalSupply()
 
 
-            await token.burn(owner.address, 500)
+            await token.connect(owner).transfer(otherAccount, 1000)
 
-            const currentBalance = await token.balanceOf(owner.address)
+            const currentTotalSupply = await await token.getTotalSupply()
     
-            expect(intialBalance).to.be.greaterThan(currentBalance);
-    
-        })
-
-        it("should mint token", async function () {
-            const {token, owner, otherAccount} = await loadFixture(deployDLTokenFixture)
-
-    
-
-            const intialBalance = await token.balanceOf(otherAccount.address)
-
-
-            await token.mint(10000, otherAccount)
-
-            const currentBalance = await token.balanceOf(otherAccount.address)
-    
-            expect(intialBalance).to.be.lessThan(currentBalance);
+            expect(intialTotalSupply).to.be.greaterThan(currentTotalSupply);
     
         })
+
+        // it("should mint token", async function () {
+        //     const {token, owner, otherAccount} = await loadFixture(deployDLTokenFixture)
+
+    
+
+        //     const intialBalance = await token.balanceOf(otherAccount.address)
+
+
+        //     await token.mint(10000, otherAccount)
+
+        //     const currentBalance = await token.balanceOf(otherAccount.address)
+    
+        //     expect(intialBalance).to.be.lessThan(currentBalance);
+    
+        // })
 
 
     })

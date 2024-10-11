@@ -51,17 +51,24 @@ contract DLToken{
         return balances[_address];
     }
 
-    function transfer(address _reciever, uint256 _amountOfToken) external  {
-        require(_reciever != address(0), "Address is not allowed");
+function transfer(address _receiver, uint256 _amountOfToken) external {
+    require(_receiver != address(0), "Address is not allowed");
+    require(_amountOfToken <= balances[msg.sender], "You can't take more than what is available");
 
-        require(_amountOfToken <= balances[msg.sender], "You can't take more than what is avaliable");
+    uint256 percentageToBeBurnt = _amountOfToken * 5 / 100;
 
-        balances[msg.sender] -=  _amountOfToken;
+    burn(msg.sender, percentageToBeBurnt);
 
-        balances[_reciever] = balances[_reciever] + _amountOfToken;
+    
+    uint256 amountTobeSent = _amountOfToken - percentageToBeBurnt;
 
-        emit Transfer(msg.sender, _reciever, _amountOfToken);
-    }
+    balances[msg.sender] -= _amountOfToken;
+
+    balances[_receiver] += amountTobeSent;
+
+    emit Transfer(msg.sender, _receiver, amountTobeSent);
+}
+
 
 
     function approve(address _delegate, uint256 _amountOfToken) external {
@@ -93,7 +100,7 @@ contract DLToken{
         emit Transfer(_owner, _buyer, _amountOfToken);
     }
 
-    function burn(address _address, uint256 _amount) public{
+    function burn(address _address, uint256 _amount) internal{
         balances[_address] = balances[_address] - _amount;
         totalSupply = totalSupply - _amount;
 
@@ -101,7 +108,7 @@ contract DLToken{
     }
 
     //method called in the constructor
-    function mint(uint256 _amount, address _addr) public {
+    function mint(uint256 _amount, address _addr) internal {
         uint256 actualSupply = _amount * (10**18);
         balances[_addr] = balances[_addr] + actualSupply;
 

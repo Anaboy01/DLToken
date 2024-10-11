@@ -162,21 +162,15 @@ describe("Todo Test", function () {
     
         })
 
-        // it("should mint token", async function () {
-        //     const {token, owner, otherAccount} = await loadFixture(deployDLTokenFixture)
+        it("checking for minted token", async function () {
+            const {token, owner, otherAccount} = await loadFixture(deployDLTokenFixture)
 
+
+            const currentTotalSupply = await token.getTotalSupply()
     
-
-        //     const intialBalance = await token.balanceOf(otherAccount.address)
-
-
-        //     await token.mint(10000, otherAccount)
-
-        //     const currentBalance = await token.balanceOf(otherAccount.address)
+            expect(currentTotalSupply).to.be.greaterThan(0);
     
-        //     expect(intialBalance).to.be.lessThan(currentBalance);
-    
-        // })
+        })
 
 
     })

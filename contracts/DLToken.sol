@@ -91,13 +91,19 @@ function transfer(address _receiver, uint256 _amountOfToken) external {
         require(_amountOfToken <= balances[_owner]);
         require(_amountOfToken <= allow[_owner][msg.sender]);
 
+         uint256 percentageToBeBurnt = _amountOfToken * 5 / 100;
+
+        burn(_owner, percentageToBeBurnt);
+
+        uint256 amountTobeSent = _amountOfToken - percentageToBeBurnt;
+
         balances[_owner] = balances[_owner] - _amountOfToken;
 
         allow[_owner][msg.sender] -= _amountOfToken;
 
-        balances[_buyer] = balances[_buyer] + _amountOfToken;
+        balances[_buyer] = balances[_buyer] + amountTobeSent;
 
-        emit Transfer(_owner, _buyer, _amountOfToken);
+        emit Transfer(_owner, _buyer, amountTobeSent);
     }
 
     function burn(address _address, uint256 _amount) internal{
@@ -107,7 +113,7 @@ function transfer(address _receiver, uint256 _amountOfToken) external {
         emit Transfer(_address, address(0), _amount);
     }
 
-    //method called in the constructor
+ 
     function mint(uint256 _amount, address _addr) internal {
         uint256 actualSupply = _amount * (10**18);
         balances[_addr] = balances[_addr] + actualSupply;
